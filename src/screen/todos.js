@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 
 import { add_todo, remove_todo } from '../actions/todos';
 import Todo from '../components/todo';
+import { ScrollView } from 'react-native-gesture-handler';
 
 class TodosScreen extends Component {
   constructor(props) {
@@ -79,6 +80,7 @@ class TodosScreen extends Component {
       todo: {
         title: "",
         descp: "",
+        dated: new Date(),
       },
     });
     this.setState({
@@ -185,10 +187,10 @@ class TodosScreen extends Component {
 
   render() {
     return (
-      <View style={styles.centeredView}>
+      <ScrollView contentContainerStyle={styles.centeredScroll}>
         {this.renderModal()}
         {this.renderTodoList()}
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -219,6 +221,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 22
+  },
+  centeredScroll: {
+    alignItems: "center",
+    marginTop: 22,
+    paddingBottom: 30,
   },
   modalView: {
     margin: 20,
