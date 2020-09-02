@@ -20,20 +20,25 @@ class HomeScreen extends Component {
         />
       );
     }
-
-    return (
-      <View style={{ flex: 1, alignItems: 'center' }} >
-        <Text h1>Welcome</Text>
-        <Text h3>To a Simple To do App</Text>
-        {btnlog}
+    else {
+      btnlog = (
         <Button
-          title  ="Todos"
+          title="Todos"
           onPress={
             () => {
               navigation.navigate('Todos');
             }
           }
         />
+      );
+    }
+
+    return (
+      <View style={{ flex: 1, alignItems: 'center' }} >
+        <Text h1>Welcome</Text>
+        <Text h3>To a Simple To do App</Text>
+        {btnlog}
+       
       </View>
     );
   }
