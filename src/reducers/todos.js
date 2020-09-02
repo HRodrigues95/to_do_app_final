@@ -10,12 +10,13 @@ function TodosReducer(state = initialstate, action) {
     case ADD:
       {
         console.log(action);
-        const { title, descp } = action.payload;
+        const { title, descp, dated } = action.payload;
         const { autoInc, todos } = state;
         todos.push({
           id: autoInc,
           title: title,
           description: descp,
+          date: dated,
           done:false,
         })
         return {...state, autoInc: autoInc+1, todos:todos  }

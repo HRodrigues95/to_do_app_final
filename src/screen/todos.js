@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { View, Modal, Alert, StyleSheet } from 'react-native';
-import { Button, Text, Input } from 'react-native-elements';
+import { View, Modal, StyleSheet} from 'react-native';
+import { Button, Input } from 'react-native-elements';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 import { connect } from 'react-redux';
+
 import { add_todo, remove_todo } from '../actions/todos';
 import Todo from '../components/todo';
 
@@ -16,11 +18,13 @@ class TodosScreen extends Component {
       todo: {
         title: "",
         descp: "",
+        dated: new Date(),
       },
     }
     this.addButton = this.addButton.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleCreate = this.handleCreate.bind(this);
+    this.handleDate = this.handleDate.bind(this);
     this.removeTodo = this.removeTodo.bind(this);
   }
 
@@ -39,6 +43,7 @@ class TodosScreen extends Component {
         todo: {
           title: text,
           descp: todo.descp,
+          dated: todo.dated,
         },
       });
     }
@@ -47,9 +52,22 @@ class TodosScreen extends Component {
         todo: {
           title: todo.title,
           descp: text,
+          dated: todo.dated,
         },
       });
     }
+  }
+
+  handleDate(e, date) {
+    console.log(date);
+    const { todo } = this.state;
+    this.setState({
+      todo: {
+        title: todo.title,
+        descp: todo.descp,
+        dated: date,
+      },
+    });
   }
 
   handleCreate() {
@@ -88,7 +106,9 @@ class TodosScreen extends Component {
   }
 
   renderModal() {
-    const { showM } = this.state;
+    const { showM, todo } = this.state;
+    let data = new Date();
+
     return (
       <Modal
         animationType="slide"
@@ -108,6 +128,13 @@ class TodosScreen extends Component {
               multiline={true}
               maxLength={127}
               onChangeText={(text) => this.handleChange(false, text)}
+            />
+            <DateTimePicker
+              value={todo.dated}
+              mode='date'
+              display='inline'
+              onChange={this.handleDate}
+              style={{ width: '100%' }}
             />
             <Button
               title="Create"

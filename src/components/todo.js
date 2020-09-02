@@ -44,6 +44,7 @@ class Todo extends Component {
         <Card.Divider />
         <View>
           <Text>{todo.description}</Text>
+          <Text>{todo.date.toString()}</Text>
         </View>
         <Card.Divider />
         <View>
