@@ -9,7 +9,6 @@ function TodosReducer(state = initialstate, action) {
   switch (action.type) {
     case ADD:
       {
-        console.log(action);
         const { title, descp, dated } = action.payload;
         const { autoInc, todos } = state;
         todos.push({
@@ -24,7 +23,6 @@ function TodosReducer(state = initialstate, action) {
       break;
     case REMOVE:
       {
-        console.log(action.payload);
         const { id } = action.payload;
         const { todos } = state;
         let pos = todos.indexOf(t => t.id === id);

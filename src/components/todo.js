@@ -43,7 +43,7 @@ class Todo extends Component {
         <Card.Title>{todo.title}</Card.Title>
         <Card.Divider />
         <View>
-          <Text>{todo.description}</Text>
+          <Text>Description:{todo.description}</Text>
           <Text>{todo.date.toString()}</Text>
         </View>
         <Card.Divider />
