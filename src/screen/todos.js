@@ -5,16 +5,14 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 import { connect } from 'react-redux';
 
-import { add_todo, remove_todo } from '../actions/todos';
+import { add_todo, remove_todo, get_all, fetchTodos, create_todo } from '../actions/todos';
 import Todo from '../components/todo';
 import { ScrollView } from 'react-native-gesture-handler';
 
 class TodosScreen extends Component {
   constructor(props) {
     super(props);
-    const { todos } = this.props;
     this.state = {
-      todos: todos,
       showM: false,
       todo: {
         title: "",
@@ -83,16 +81,11 @@ class TodosScreen extends Component {
         dated: new Date(),
       },
     });
-    this.setState({
-      todos: this.props.todos,
-    });
   }
 
   removeTodo(id) {
     const { remove } = this.props;
-    remove({
-      id: id,
-    });
+    remove(id);
     this.setState({
       todos: this.props.todos,
     });
@@ -162,7 +155,7 @@ class TodosScreen extends Component {
   }
 
   renderTodoList() {
-    const { todos } = this.state;
+    const { todos } = this.props;
     let sl = [];
     for (let i = 0; i < todos.length; i++) {
       const todo = todos[i];
@@ -172,7 +165,7 @@ class TodosScreen extends Component {
   }
 
   componentDidMount() {
-    const { navigation } = this.props;
+    const { getlst, navigation } = this.props;
     if (!this.props.isLogged) {
       navigation.replace('Login');
     }
@@ -182,6 +175,7 @@ class TodosScreen extends Component {
           headerRight: this.addButton,
         }
       );
+      getlst();
     }
   }
 
@@ -196,20 +190,19 @@ class TodosScreen extends Component {
 }
 
 function mapStateToProps({ Auth, Todos }) {
-  const { todos } = Todos;
-  const { logged_in } = Auth;
   return (
     {
-      isLogged: logged_in,
-      todos   : todos,
+      isLogged: Auth.logged_in,
+      todos   : Todos.todos,
     }
   );
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    create: (payload) => dispatch(add_todo(payload)),
+    create: (payload) => dispatch(create_todo(payload)),
     remove: (payload) => dispatch(remove_todo(payload)),
+    getlst: () => dispatch(fetchTodos()),
   };
 }
 
