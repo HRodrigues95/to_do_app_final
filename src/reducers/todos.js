@@ -26,7 +26,7 @@ function TodosReducer(state = initialstate, action) {
         const { id } = action.payload;
         const { todos } = state;
         let pos = todos.indexOf(t => t.id === id);
-        todos.splice(pos-1, 1);
+        todos.splice(pos, 1);
         return {...state, todos:todos }
       }
       break;
